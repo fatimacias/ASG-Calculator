@@ -78,5 +78,14 @@ namespace ASG.Calculator.Tests
             int result = Program.AddNumbers(input);
             Assert.Equal(8, result);  
         }
+        [Theory]
+        [InlineData("//,\n2,ff,100", 102)]
+        [InlineData("//#\n2#5", 7)]
+        [InlineData("//#\n2#5#8\n10", 25)]
+        public void AddNumbers_InvalidNumberWithCustomDelimiter_ReturnsCorrectSum(string input, int expected)
+        {
+            int result = Program.AddNumbers(input);
+            Assert.Equal(expected, result);
+        }
     }
 }

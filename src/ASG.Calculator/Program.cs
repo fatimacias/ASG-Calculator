@@ -1,11 +1,13 @@
-﻿namespace ASG.Calculator
+﻿using System.IO;
+
+namespace ASG.Calculator
 {
     public class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Fatima Macias");
-            Console.WriteLine("Enter numbers separated by a coma");
+            Console.WriteLine("Enter numbers with an optional custom delimiter in the format: //{delimiter}\n{numbers}");
             string input = Console.ReadLine();
             try
             {
@@ -21,9 +23,8 @@
         {
             if (string.IsNullOrEmpty(input))
                 return 0;
-
-            string sanitizedInput = input.Replace("\n", ",");
-            string[] parts = sanitizedInput.Split(',');
+            
+            string[] parts = SanitizedInput(input);
 
             int sum = 0;
             List<int> negativeNumbers = new List<int>();
@@ -46,6 +47,23 @@
                 throw new Exception($"Negative numbers are not allowed: {string.Join(", ", negativeNumbers)}");
             }
             return sum;
+        }
+        static string[] SanitizedInput(string input)
+        {
+            string sanitizedInput = input;
+            string delimiter = ",";
+            if (input.StartsWith("//"))
+            {
+                int delimiterIndex = input.IndexOf("\n");
+                if (delimiterIndex == -1)
+                {
+                    throw new Exception("Invalid input format: missing newline after delimiter");
+                }
+                delimiter = input.Substring(2, delimiterIndex - 2);
+                sanitizedInput = input.Substring(delimiterIndex + 1);
+            }
+            sanitizedInput = sanitizedInput.Replace("\n", delimiter);
+            return sanitizedInput.Split(delimiter);
         }
     }
 }
