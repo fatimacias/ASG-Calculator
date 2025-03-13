@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace ASG.Calculator
@@ -51,22 +52,42 @@ namespace ASG.Calculator
         }
         static string[] SanitizedInput(string input)
         {
+            //Default demiliters
+            List<string> delimiters = [",", "\n"];
             string sanitizedInput = input;
-            string delimiter = ",";
+
             if (input.StartsWith("//"))
             {
-                string expression = input.StartsWith("//[") ? @"^//\[(.*?)\]\n" : @"^//.(?=\n)";
-
-                var match = Regex.Match(input, expression);
-                if (!match.Success)
+                var customDelimiterMatch = Regex.Match(input, @"^//(.*?)\n(.*)", RegexOptions.Singleline);
+                if (customDelimiterMatch.Success)
                 {
-                    throw new Exception("Invalid input format: missing delimiter or newline.");
+                    string delimiterPart = customDelimiterMatch.Groups[1].Value;
+                    sanitizedInput = customDelimiterMatch.Groups[2].Value;
+
+                    // Multiple delimiters of any length
+                    var multiDelimiterMatches = Regex.Matches(delimiterPart, @"\[(.*?)]");
+                    if (multiDelimiterMatches.Count > 0)
+                    {
+                        foreach (Match m in multiDelimiterMatches.Cast<Match>())
+                        {
+                            delimiters.Add(m.Groups[1].Value);
+                        }
+                    }
+                    else
+                    {
+                        // Single custom delimiter
+                        delimiters.Add(delimiterPart);
+                    }
                 }
-                delimiter = input.StartsWith("//[") ? match.Groups[1].Value : match.Value.Substring(2, 1);
-                sanitizedInput = input[match.Length..];
             }
-            sanitizedInput = sanitizedInput.Replace("\n", delimiter);
-            return sanitizedInput.Split(new[] { delimiter }, StringSplitOptions.None);
+            return SplitNumbers(sanitizedInput, delimiters);
+
+        }
+        private static string[] SplitNumbers(string numbers, List<string> delimiters)
+        {
+            string pattern = string.Join("|", delimiters.Select(Regex.Escape));
+            return Regex.Split(numbers, pattern);
         }
     }
+    
 }

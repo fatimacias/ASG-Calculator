@@ -84,10 +84,13 @@ namespace ASG.Calculator.Tests
         [InlineData("//#\n2#5#8\n10", 25)]
         [InlineData("//[***]\n11***22***33", 66)]
         [InlineData("//[#]\n2#5#8\n10", 25)]
+        [InlineData("//[*][!!][r9r]\n11r9r22*hh*33!!44", 110)]
         public void AddNumbers_InvalidNumberWithCustomDelimiter_ReturnsCorrectSum(string input, int expected)
         {
             int result = Program.AddNumbers(input);
             Assert.Equal(expected, result);
         }
+
+
     }
 }
