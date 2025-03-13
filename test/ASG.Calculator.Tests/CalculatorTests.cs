@@ -42,11 +42,11 @@ namespace ASG.Calculator.Tests
         }
 
         [Fact]
-        public void AddNumbers_TooManyNumbers_ThrowsException()
+        public void AddNumbers_TooManyNumbers_ReturnsSum()
         {
-            string input = "1,2,3";
-            var exception = Assert.Throws<Exception>(() => Program.AddNumbers(input));
-            Assert.Equal("You can only provide a maximum of two numbers.", exception.Message);
+            string input = "1,2,3,4,5,6,7,8,9,10,11,12";
+            int result = Program.AddNumbers(input);
+            Assert.Equal(78, result);
         }
 
         [Fact]

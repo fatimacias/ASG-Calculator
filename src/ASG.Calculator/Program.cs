@@ -23,8 +23,6 @@
                 return 0;
 
             string[] parts = input.Split(',');
-            if (parts.Length > 2)
-                throw new Exception("You can only provide a maximum of two numbers.");
 
             int sum = 0;
             foreach (var part in parts)
