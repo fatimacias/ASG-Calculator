@@ -29,7 +29,7 @@
             List<int> negativeNumbers = new List<int>();
             foreach (var part in parts)
             {
-                if (int.TryParse(part, out int number))
+                if (int.TryParse(part, out int number) && number<=1000)
                 {
                     if(number>0)
                     {

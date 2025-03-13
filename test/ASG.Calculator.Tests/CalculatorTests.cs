@@ -22,15 +22,16 @@ namespace ASG.Calculator.Tests
         {
             string input = "1,5000";
             int result = Program.AddNumbers(input);
-            Assert.Equal(5001, result);
+            Assert.Equal(1, result);
         }
 
         [Fact]
         public void AddNumbers_NegativeNumber_ReturnsCorrectSum()
         {
             string input = "4,-3";
-            int result = Program.AddNumbers(input);
-            Assert.Equal(1, result);
+            var exception = Assert.Throws<Exception>(() => Program.AddNumbers(input));
+            Assert.Equal("Negative numbers are not allowed: -3", exception.Message);
+
         }
 
         [Fact]
@@ -69,6 +70,13 @@ namespace ASG.Calculator.Tests
             string input = "1,-2,3";
             var exception = Assert.Throws<Exception>(() => Program.AddNumbers(input));
             Assert.Equal("Negative numbers are not allowed: -2", exception.Message);
+        }
+        [Fact]
+        public void AddNumbers_NumbersGreaterThan1000_ReturnsCorrectSum()
+        {
+            string input = "2,1001,6";
+            int result = Program.AddNumbers(input);
+            Assert.Equal(8, result);  
         }
     }
 }
