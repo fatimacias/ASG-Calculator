@@ -56,5 +56,12 @@ namespace ASG.Calculator.Tests
             int result = Program.AddNumbers(input);
             Assert.Equal(0, result);
         }
+        [Fact]
+        public void AddNumbers_ValidNumbersWithNewLineAndComma_ReturnsCorrectSum()
+        {
+            string input = "1\n2,3";
+            int result = Program.AddNumbers(input);
+            Assert.Equal(6, result);  // 1 + 2 + 3 = 6
+        }
     }
 }

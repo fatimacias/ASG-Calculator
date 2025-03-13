@@ -22,12 +22,13 @@
             if (string.IsNullOrEmpty(input))
                 return 0;
 
-            string[] parts = input.Split(',');
+            string sanitizedInput = input.Replace("\n", ",");
+            string[] parts = sanitizedInput.Split(',');
 
             int sum = 0;
             foreach (var part in parts)
             {
-                if (int.TryParse(part, out int number))
+                if ( int.TryParse(part, out int number))
                     sum += number;
             }
 
