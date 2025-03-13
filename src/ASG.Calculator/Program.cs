@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ASG.Calculator
 {
@@ -27,7 +28,7 @@ namespace ASG.Calculator
             string[] parts = SanitizedInput(input);
 
             int sum = 0;
-            List<int> negativeNumbers = new List<int>();
+            List<int> negativeNumbers = [];
             foreach (var part in parts)
             {
                 if (int.TryParse(part, out int number) && number<=1000)
@@ -54,16 +55,18 @@ namespace ASG.Calculator
             string delimiter = ",";
             if (input.StartsWith("//"))
             {
-                int delimiterIndex = input.IndexOf("\n");
-                if (delimiterIndex == -1)
+                string expression = input.StartsWith("//[") ? @"^//\[(.*?)\]\n" : @"^//.(?=\n)";
+
+                var match = Regex.Match(input, expression);
+                if (!match.Success)
                 {
-                    throw new Exception("Invalid input format: missing newline after delimiter");
+                    throw new Exception("Invalid input format: missing delimiter or newline.");
                 }
-                delimiter = input.Substring(2, delimiterIndex - 2);
-                sanitizedInput = input.Substring(delimiterIndex + 1);
+                delimiter = input.StartsWith("//[") ? match.Groups[1].Value : match.Value.Substring(2, 1);
+                sanitizedInput = input[match.Length..];
             }
             sanitizedInput = sanitizedInput.Replace("\n", delimiter);
-            return sanitizedInput.Split(delimiter);
+            return sanitizedInput.Split(new[] { delimiter }, StringSplitOptions.None);
         }
     }
 }
