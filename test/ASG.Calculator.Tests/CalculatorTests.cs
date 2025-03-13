@@ -63,5 +63,12 @@ namespace ASG.Calculator.Tests
             int result = Program.AddNumbers(input);
             Assert.Equal(6, result);  // 1 + 2 + 3 = 6
         }
+        [Fact]
+        public void AddNumbers_NegativeNumbers_ThrowsException()
+        {
+            string input = "1,-2,3";
+            var exception = Assert.Throws<Exception>(() => Program.AddNumbers(input));
+            Assert.Equal("Negative numbers are not allowed: -2", exception.Message);
+        }
     }
 }

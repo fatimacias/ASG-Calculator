@@ -26,12 +26,25 @@
             string[] parts = sanitizedInput.Split(',');
 
             int sum = 0;
+            List<int> negativeNumbers = new List<int>();
             foreach (var part in parts)
             {
-                if ( int.TryParse(part, out int number))
-                    sum += number;
+                if (int.TryParse(part, out int number))
+                {
+                    if(number>0)
+                    {
+                        sum += number;
+                    }
+                    else
+                    {
+                        negativeNumbers.Add(number);
+                    }
+                }
             }
-
+            if(negativeNumbers.Count>0)
+            {
+                throw new Exception($"Negative numbers are not allowed: {string.Join(", ", negativeNumbers)}");
+            }
             return sum;
         }
     }
