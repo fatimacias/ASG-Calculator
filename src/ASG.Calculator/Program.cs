@@ -9,17 +9,25 @@ namespace ASG.Calculator
         static void Main(string[] args)
         {
             Console.WriteLine("Fatima Macias");
-            Console.WriteLine("Enter numbers with an optional custom delimiter in the format: //{delimiter}\n{numbers}");
-            string input = Console.ReadLine();
-            try
+            Console.WriteLine("String Calculator - Enter input strings to calculate sums. Press Ctrl + C to exit.");
+            Console.WriteLine("----------------------------------------------------------");
+
+            while (true)
             {
-                string result = AddNumbers(input);
-                Console.WriteLine($"Result: {result}");
+                Console.Write("\nEnter input: ");
+                string input = Console.ReadLine();
+
+                try
+                {
+                    string result = AddNumbers(input);
+                    Console.WriteLine($"Result: {result}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+            
         }
         public static string AddNumbers(string input)
         {
