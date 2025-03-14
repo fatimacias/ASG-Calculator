@@ -13,7 +13,7 @@ namespace ASG.Calculator
             string input = Console.ReadLine();
             try
             {
-                int result = AddNumbers(input);
+                string result = AddNumbers(input);
                 Console.WriteLine($"Result: {result}");
             }
             catch (Exception ex)
@@ -21,34 +21,14 @@ namespace ASG.Calculator
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-        public static int AddNumbers(string input)
+        public static string AddNumbers(string input)
         {
             if (string.IsNullOrEmpty(input))
-                return 0;
+                return "0";
             
             string[] parts = SanitizedInput(input);
-
-            int sum = 0;
-            List<int> negativeNumbers = [];
-            foreach (var part in parts)
-            {
-                if (int.TryParse(part, out int number) && number<=1000)
-                {
-                    if(number>0)
-                    {
-                        sum += number;
-                    }
-                    else
-                    {
-                        negativeNumbers.Add(number);
-                    }
-                }
-            }
-            if(negativeNumbers.Count>0)
-            {
-                throw new Exception($"Negative numbers are not allowed: {string.Join(", ", negativeNumbers)}");
-            }
-            return sum;
+            List<int> numbers = GetValidNumbers(parts);
+            return $"{string.Join('+', numbers)}={numbers.Sum()}";
         }
         static string[] SanitizedInput(string input)
         {
@@ -87,6 +67,31 @@ namespace ASG.Calculator
         {
             string pattern = string.Join("|", delimiters.Select(Regex.Escape));
             return Regex.Split(numbers, pattern);
+        }
+        private static List<int> GetValidNumbers(string[] numbers)
+        {
+            var validNumbers = new List<int>();
+            List<int> negativeNumbers = [];
+            foreach (var numStr in numbers)
+            {
+                if (int.TryParse(numStr, out int number))
+                {
+                    if (number > 1000)
+                        number = 0;
+                    else if(number < 0)
+                        negativeNumbers.Add(number);
+                    validNumbers.Add(number);
+                }
+                else
+                {
+                    validNumbers.Add(0); 
+                }
+            }
+            if (negativeNumbers.Count > 0)
+            {
+                throw new Exception($"Negative numbers are not allowed: {string.Join(", ", negativeNumbers)}");
+            }
+            return validNumbers;
         }
     }
     
