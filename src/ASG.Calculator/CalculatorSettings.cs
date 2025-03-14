@@ -11,6 +11,7 @@ namespace ASG.Calculator
         public string AlternateDelimiter { get; set; } = "\n"; // Default as per your constructor
         public bool AllowNegatives { get; set; } = false;
         public int UpperBound { get; set; } = 1000;
+        public string Operation { get; set; } = "add";
 
         public static CalculatorSettings FromArgs(string[] args)
         {
@@ -24,6 +25,8 @@ namespace ASG.Calculator
                     settings.AllowNegatives = true;
                 else if (arg.StartsWith("--upper-bound=") && int.TryParse(arg["--upper-bound=".Length..], out int ub))
                     settings.UpperBound = ub;
+                else if (arg.StartsWith("--operation="))
+                    settings.Operation = arg["--operation=".Length..].ToLower();
             }
 
             return settings;

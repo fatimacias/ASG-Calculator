@@ -14,18 +14,21 @@ namespace ASG.Calculator
         private readonly string? _alternateDelimiter = null;
         private readonly bool _allowNegatives;
         private readonly int _upperBound;
+        private readonly string _operation;
 
-        public StringCalculator(string alternateDelimiter = "\n", bool allowNegatives = false, int upperBound = 1000)
+        public StringCalculator(string alternateDelimiter = "\n", bool allowNegatives = false, int upperBound = 1000, string operation = "add")
         {
             _allowNegatives = allowNegatives;
             _upperBound = upperBound;
             _alternateDelimiter = alternateDelimiter;
+            _operation = operation;
         }
         public StringCalculator(CalculatorSettings settings)
         {
             _alternateDelimiter = settings.AlternateDelimiter;
             _allowNegatives = settings.AllowNegatives;
             _upperBound = settings.UpperBound;
+            _operation = settings.Operation;
         }
 
         public string AddNumbers(string input)
@@ -35,7 +38,7 @@ namespace ASG.Calculator
 
             string[] parts = SanitizedInput(input);
             List<int> numbers = GetValidNumbers(parts);
-            return $"{string.Join('+', numbers)}={numbers.Sum()}";
+            return Operation(numbers);
         }
         private string[] SanitizedInput(string input)
         {
@@ -102,6 +105,33 @@ namespace ASG.Calculator
             }
             return validNumbers;
         }
-
+        private string Operation(List<int> numbers)
+        {
+            string expression = string.Join(GetOperationSymbol(), numbers);
+            var result = _operation switch
+            {
+                "add" => numbers.Sum(),
+                "sub" => numbers.Skip(1).Aggregate(numbers[0], (acc, x) => acc - x),
+                "mul" => numbers.Aggregate(1, (acc, x) => acc * x),
+                "div" => numbers.Skip(1).Aggregate(numbers[0], (acc, x) =>
+                                    {
+                                        if (x == 0) throw new DivideByZeroException("Cannot divide by zero.");
+                                        return acc / x;
+                                    }),
+                _ => throw new InvalidOperationException($"Unsupported operation '{_operation}'."),
+            };
+            return $"{expression}={result}";
+        }
+        private string GetOperationSymbol()
+        {
+            return _operation switch
+            {
+                "add" => "+",
+                "sub" => "-",
+                "mul" => "*",
+                "div" => "/",
+                _ => "+"
+            };
+        }
     }
 }

@@ -136,5 +136,46 @@ namespace ASG.Calculator.Tests
 
             Assert.Equal("1+2+3=6", result);
         }
+        [Fact]
+        public void DivisionByZero_ThrowsException()
+        {
+            var settings = new CalculatorSettings { Operation = "div" };
+            var calculator = new StringCalculator(settings);
+
+            var ex = Assert.Throws<DivideByZeroException>(() => calculator.AddNumbers("10,0,2"));
+            Assert.Equal("Cannot divide by zero.", ex.Message);
+        }
+        [Fact]
+        public void Subtraction_ReturnsCorrectResult()
+        {
+            var settings = new CalculatorSettings { Operation = "sub" };
+            var calculator = new StringCalculator(settings);
+
+            var result = calculator.AddNumbers("10,3,2");
+
+            Assert.Equal("10-3-2=5", result);
+        }
+
+        [Fact]
+        public void Multiplication_ReturnsCorrectResult()
+        {
+            var settings = new CalculatorSettings { Operation = "mul" };
+            var calculator = new StringCalculator(settings);
+
+            var result = calculator.AddNumbers("2,3,4");
+
+            Assert.Equal("2*3*4=24", result);
+        }
+
+        [Fact]
+        public void Division_ReturnsCorrectResult()
+        {
+            var settings = new CalculatorSettings { Operation = "div" };
+            var calculator = new StringCalculator(settings);
+
+            var result = calculator.AddNumbers("100,2,5");
+
+            Assert.Equal("100/2/5=10", result);
+        }
     }
 }
