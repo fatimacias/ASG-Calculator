@@ -1,3 +1,5 @@
+using ASG.Calculator.Contracts;
+
 namespace ASG.Calculator.Tests
 {
     public class StringCalculatorTests
@@ -122,6 +124,17 @@ namespace ASG.Calculator.Tests
             var calc = new StringCalculator(allowNegatives: true);
             var result = calc.AddNumbers("1,-2,3");
             Assert.Equal("1+-2+3=2", result);
+        }
+
+        [Fact]
+        public void AddNumbers_SimpleSum_UsingInterface()
+        {
+            var settings = new CalculatorSettings();
+            IStringCalculator calculator = new StringCalculator(settings);
+
+            var result = calculator.AddNumbers("1,2,3");
+
+            Assert.Equal("1+2+3=6", result);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ASG.Calculator.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +8,25 @@ using System.Threading.Tasks;
 
 namespace ASG.Calculator
 {
-    public class StringCalculator(string alternateDelimiter = "\n", bool allowNegatives = false, int upperBound = 1000)
+    public class StringCalculator : IStringCalculator
     {
         private readonly List<string> DefaultDelimiters = new List<string> { ",", "\n" };
-        private readonly string _alternateDelimiter = alternateDelimiter;
-        private readonly bool _allowNegatives = allowNegatives;
-        private readonly int _upperBound = upperBound;
+        private readonly string? _alternateDelimiter = null;
+        private readonly bool _allowNegatives;
+        private readonly int _upperBound;
+
+        public StringCalculator(string alternateDelimiter = "\n", bool allowNegatives = false, int upperBound = 1000)
+        {
+            _allowNegatives = allowNegatives;
+            _upperBound = upperBound;
+            _alternateDelimiter = alternateDelimiter;
+        }
+        public StringCalculator(CalculatorSettings settings)
+        {
+            _alternateDelimiter = settings.AlternateDelimiter;
+            _allowNegatives = settings.AllowNegatives;
+            _upperBound = settings.UpperBound;
+        }
 
         public string AddNumbers(string input)
         {

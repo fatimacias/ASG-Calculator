@@ -1,0 +1,12 @@
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\bin\Debug\net8.0\ASG.Calculator.Contracts.deps.json
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\bin\Debug\net8.0\ASG.Calculator.Contracts.dll
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\bin\Debug\net8.0\ASG.Calculator.Contracts.pdb
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\ASG.Calculator.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\ASG.Calculator.Contracts.AssemblyInfoInputs.cache
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\ASG.Calculator.Contracts.AssemblyInfo.cs
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\ASG.Calculator.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\ASG.Calculator.Contracts.sourcelink.json
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\ASG.Calculator.Contracts.dll
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\refint\ASG.Calculator.Contracts.dll
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\ASG.Calculator.Contracts.pdb
+C:\Users\Fatima\source\repos\ASG-Calculator\src\ASG.Calculator.Contracts\obj\Debug\net8.0\ref\ASG.Calculator.Contracts.dll
